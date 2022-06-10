@@ -13,10 +13,10 @@ do { \
 
 
 void initBST(BST* bst) {
-	
+
 	bst->root = NULL; // Init new BST
-	
-	}
+
+}
 
 
 void insertBST(BST* bst, int value) {
@@ -30,8 +30,8 @@ void insertBST(BST* bst, int value) {
 		return;
 	}
 	else {
-		if(value > bst->root->element) // arrange elements by order if binray tree
-		return insertBST(&bst->root->right, value);
+		if (value > bst->root->element) // arrange elements by order if binray tree
+			return insertBST(&bst->root->right, value);
 		if (value <= bst->root->element)
 			return insertBST(&bst->root->left, value);
 	}
@@ -43,7 +43,7 @@ void printTreeInorder(BST* bst) {
 		printf("%d", bst->root->element);
 		printTreeInorder(&bst->root->right); // get to the right nodes
 	}
-	
+
 }
 
 void destroyBST(BST* bst) {
@@ -56,37 +56,37 @@ void destroyBST(BST* bst) {
 }
 
 int findIndexNFromLast(BST* bst, int N) {
-	int all = CountRoots(bst);
-	if (N > all || N < 1) { // if N is not in range
+	int path = CountRoots(bst);
+	if (N > path || N < 1) {
 		printf("parameter N is not in range\n");
 		return 0;
 	}
-	N = all - N + 1;
-	int middle = mid(bst->root);
-	int num = foo(bst, middle, N);
+	N = path - N + 1;
+	int center = mid(bst->root);
+	int num = foo(bst, center, N);
 	return num;
-	
-	
-	}
-	
+
+
+}
+
 
 int mid(TreeNode* node) {
-	int all = CountRoots2(node); // count all roots
+	int path = CountRoots2(node);
 	int right = CountRoots2(node->right); // count only roots of node.right
-	int middle = all - right; // middle = roots of node.left
-	return middle;
+	int center = path - right;
+	return center;
 }
-int foo(BST* bst, int middle, int N) {
+int foo(BST* bst, int center, int N) {
 	if (bst->root != NULL) {
 		int num = 0;
-		if (N == middle) { // if N = roots of node.left, return the current element.
+		if (N == center) {
 			return bst->root->element;
 		}
-		if (middle < N) { // if N > middle, we need nodes from right part of the tree
-			num = foo(&bst->root->right, middle + mid(bst->root->right) , N);
+		if (center < N) {
+			num = foo(&bst->root->right, center + mid(bst->root->right), N);
 		}
-		if (middle > N) { // in N < middle, we need nodes from left part of the tree
-			num = foo(&bst->root->left, middle - mid(bst->root->left), N);
+		if (center > N) {
+			num = foo(&bst->root->left, center - mid(bst->root->left), N);
 		}
 		return num;
 	}
@@ -108,7 +108,7 @@ bool CheckLeafLevel(BST* bst, int level, int* leaflevel) {
 	}
 	return CheckLeafLevel(&bst->root->left, level + 1, leaflevel) && CheckLeafLevel(&bst->root->right, level + 1, leaflevel);
 	// if this is not a leaf, check his left && right
-	}
+}
 
 
 int sameHeightLeaves(BST* bst) {
@@ -125,7 +125,7 @@ int CountRoots(BST* bst) { // count roots in bst by bst
 }
 
 int CountRoots2(TreeNode* node) { // count roots in bst by treenode
-	if (node == NULL ){
+	if (node == NULL) {
 		return 0;
 	}
 	return 1 + CountRoots2(node->left) + CountRoots2(node->right);
